@@ -1,0 +1,4 @@
+# 忽略 node_mudules目录
+node_modules/
+.idea/
+
