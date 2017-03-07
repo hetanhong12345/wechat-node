@@ -16,37 +16,42 @@ router.use('/wechat', wechat(config, function (req, res, next) {
     // 微信输入信息都在req.weixin上
     var message = req.weixin;
     console.log(message);
-    if (message.FromUserName === 'diaosi') {
-        // 回复屌丝(普通回复)
-        res.reply('hehe');
-    } else if (message.FromUserName === 'text') {
-        //你也可以这样回复text类型的信息
-        res.reply({
-            content: 'text object',
-            type: 'text'
-        });
-    } else if (message.FromUserName === 'hehe') {
-        // 回复一段音乐
-        res.reply({
-            type: "music",
-            content: {
-                title: "来段音乐吧",
-                description: "一无所有",
-                musicUrl: "http://mp3.com/xx.mp3",
-                hqMusicUrl: "http://mp3.com/xx.mp3",
-                thumbMediaId: "thisThumbMediaId"
-            }
-        });
-    } else {
-        // 回复高富帅(图文回复)
+    if(message.content.includes('美团')){
         res.reply([
             {
-                title: '你来我家接我吧',
-                description: '这是女神与高富帅之间的对话',
-                picurl: 'http://nodeapi.cloudfoundry.com/qrcode.jpg',
-                url: 'http://nodeapi.cloudfoundry.com/'
+                title: '商务专员',
+                description: '美团网：美团一次 美一次，为消费者发现值得信赖的商家，让消费者享受超低折扣的优质服务。',
+                picurl: 'https://public.mofanghr.com/head/2016/02/29/201602291804355484.jpg',
+                url: 'https://i.mofanghr.com/offline-job-detail/503132?slotId=2CC022BE73528CED'
             }
         ]);
+        return ;
     }
+    if(message.content.includes('人人')){
+        res.reply([
+            {
+                title: '客服专员',
+                description: '中国互联网百强企业，以诚信、透明、公平、高效、创新的声誉赢得了良好的用户口碑。',
+                picurl: 'http://7xio5n.com1.z0.glb.clouddn.com/%E4%BA%BA%E4%BA%BA%E8%B4%B7logo.png',
+                url: 'https://i.mofanghr.com/offline-job-detail/503997?slotId=D1ACA5B3F9110008'
+            }
+        ]);
+        return ;
+    }
+    if(message.content.includes('魔方')){
+        res.reply([
+            {
+                title: '魔方面面',
+                description: '魔方面面-原魔方招聘-专门为年轻求职者提供免费猎头服务的平台',
+                picurl: 'https://static1.mofanghr.com/www/img/header-logo.png',
+                url: 'https://i.mofanghr.com/app/offline-index'
+            }
+        ]);
+        return ;
+    }
+    res.reply({
+        content: `你才是${message.content}`,
+        type: 'text'
+    });
 }));
 module.exports = router;
