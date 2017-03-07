@@ -16,7 +16,7 @@ router.use('/wechat', wechat(config, function (req, res, next) {
     // 微信输入信息都在req.weixin上
     var message = req.weixin;
     console.log(message);
-    if(message.content.includes('美团')){
+    if(message.content.indexOf('美团')>-1){
         res.reply([
             {
                 title: '商务专员',
@@ -27,7 +27,7 @@ router.use('/wechat', wechat(config, function (req, res, next) {
         ]);
         return ;
     }
-    if(message.content.includes('人人')){
+    if(message.content.indexOf('人人')>-1){
         res.reply([
             {
                 title: '客服专员',
@@ -38,7 +38,7 @@ router.use('/wechat', wechat(config, function (req, res, next) {
         ]);
         return ;
     }
-    if(message.content.includes('魔方')){
+    if(message.content.indexOf('魔方')>-1){
         res.reply([
             {
                 title: '魔方面面',
@@ -50,7 +50,7 @@ router.use('/wechat', wechat(config, function (req, res, next) {
         return ;
     }
     res.reply({
-        content: `你才是${message.content}`,
+        content: '你才是'+message.content,
         type: 'text'
     });
 }));
