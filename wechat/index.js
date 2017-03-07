@@ -38,7 +38,7 @@ function uauth(req, res, next) {
         res.redirect('https://i.mofanghr.com/app/offline-index');
     });
 }
-router.use('/uauth',uauth)
+router.use('/uauth', wechat(config, uauth));
 router.use('/wechat', wechat(config, function (req, res, next) {
     // 微信输入信息都在req.weixin上
     var message = req.weixin;
