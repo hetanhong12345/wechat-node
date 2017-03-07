@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session')
 var cookieParser = require('cookie-parser');
 var app = express();
-var port = 80;
+var port = 8080;
 var router = require('./bluebird/router');
 var wechat =require('./wechat/index');
 app.use(cookieParser());
