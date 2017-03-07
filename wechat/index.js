@@ -16,7 +16,8 @@ var config = {
 };
 
 router.use(express.query());
-function uauth() {
+function uauth(req, res, next) {
+    console.log(req.query);
     new OAuth(appid, secret, function (openid, callback) {
         // 传入一个根据openid获取对应的全局token的方法
         // 在getUser时会通过该方法来获取token
@@ -25,6 +26,7 @@ function uauth() {
             if (err) {return callback(err);}
             callback(null, JSON.parse(txt));
         });
+        res.redirect('https://i.mofanghr.com/app/offline-index');
 
     }, function (openid, token, callback) {
         // 请将token存储到全局，跨进程、跨机器级别的全局，比如写到数据库、redis等
@@ -33,8 +35,10 @@ function uauth() {
         console.log(openid);
         console.log(token);
         fs.writeFile(openid + ':access_token.txt', JSON.stringify(token), callback);
+        res.redirect('https://i.mofanghr.com/app/offline-index');
     });
 }
+router.use('/uauth',uauth)
 router.use('/wechat', wechat(config, function (req, res, next) {
     // 微信输入信息都在req.weixin上
     var message = req.weixin;
@@ -75,6 +79,17 @@ router.use('/wechat', wechat(config, function (req, res, next) {
                 description: '魔方面面-原魔方招聘-专门为年轻求职者提供免费猎头服务的平台',
                 picurl: 'https://static1.mofanghr.com/www/img/header-logo.png',
                 url: 'https://i.mofanghr.com/app/offline-index'
+            }
+        ]);
+        return ;
+    }
+    if(message.Content.indexOf('a')>-1){
+        res.reply([
+            {
+                title: '魔方面面',
+                description: '魔方面面-原魔方招聘-专门为年轻求职者提供免费猎头服务的平台',
+                picurl: 'https://static1.mofanghr.com/www/img/header-logo.png',
+                url: 'http://www.kknode.cn/uauth?back=https://i.mofanghr.com/app/offline-index'
             }
         ]);
         return ;
