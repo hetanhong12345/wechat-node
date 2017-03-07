@@ -86,6 +86,7 @@ router.use('/wechat', wechat(config, function (req, res, next) {
                 url: client.getAuthorizeURL('https://i.mofanghr.com/app/offline-index', 'state', 'scope')
             }
         ]);
+        console.log(client.getAuthorizeURL('https://i.mofanghr.com/app/offline-index', 'state', 'scope'))
         return;
     }
     res.reply({
