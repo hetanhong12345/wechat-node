@@ -83,10 +83,10 @@ router.use('/wechat', wechat(config, function (req, res, next) {
                 title: '魔方面面',
                 description: '魔方面面-原魔方招聘-专门为年轻求职者提供免费猎头服务的平台',
                 picurl: 'https://static1.mofanghr.com/www/img/header-logo.png',
-                url: client.getAuthorizeURL('https://i.mofanghr.com/app/offline-index', 'state', 'snsapi_base')
+                url: client.getAuthorizeURL('https://i.mofanghr.com/app/offline-index', '1', 'snsapi_base')
             }
         ]);
-        console.log(client.getAuthorizeURL('https://i.mofanghr.com/app/offline-index', 'state', 'snsapi_base'))
+        console.log(client.getAuthorizeURL('https://i.mofanghr.com/app/offline-index', '1', 'snsapi_base'))
         return;
     }
     res.reply({
