@@ -4,8 +4,9 @@ var bodyParser = require('body-parser');
 var session = require('express-session')
 var cookieParser = require('cookie-parser');
 var app = express();
-var port = 6100;
-var router = require('./bluebird/router')
+var port = 80;
+var router = require('./bluebird/router');
+var wechat =require('./wechat/index');
 app.use(cookieParser());
 app.use(session({
     secret: 'abcdefg',
@@ -17,6 +18,7 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(router);
+app.use(wechat);
 
 app.get("*", function (req, res) {
     res.sendFile(__dirname + '/index.html');
