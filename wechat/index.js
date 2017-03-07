@@ -1,17 +1,41 @@
 /**
  * Created by Administrator on 2017/3/7.
  */
+var fs =require('fs');
 var express = require('express');
 var router = express.Router();
 var wechat = require('wechat');
+var OAuth = require('wechat-oauth');
+var appid ='wx615b29c1fe62d055';
+var secret ='ca99e6f92581e5b887515d86b51ac277';
 var config = {
     token: 'hkktoken',
-    appid: 'wx615b29c1fe62d055',
+    appid: appid,
     encodingAESKey: 'uV3tDdxsj6aEvLrYU87NHt4HUaqyGtEj6uHTOtMI7Vf',
     checkSignature: true // 可选，默认为true。由于微信公众平台接口调试工具在明文模式下不发送签名，所以如要使用该测试工具，请将其设置为false
 };
 
 router.use(express.query());
+router.use('/wechat',wechat(config, function (req, res, next) {
+     new OAuth(appid, secret, function (openid, callback) {
+        // 传入一个根据openid获取对应的全局token的方法
+        // 在getUser时会通过该方法来获取token
+         console.log(openid);
+        fs.readFile(openid +':access_token.txt', 'utf8', function (err, txt) {
+            if (err) {return callback(err);}
+            callback(null, JSON.parse(txt));
+        });
+        next();
+    }, function (openid, token, callback) {
+        // 请将token存储到全局，跨进程、跨机器级别的全局，比如写到数据库、redis等
+        // 这样才能在cluster模式及多机情况下使用，以下为写入到文件的示例
+        // 持久化时请注意，每个openid都对应一个唯一的token!
+         console.log(openid);
+         console.log(token);
+        fs.writeFile(openid + ':access_token.txt', JSON.stringify(token), callback);
+         next();
+    });
+}))
 router.use('/wechat', wechat(config, function (req, res, next) {
     // 微信输入信息都在req.weixin上
     var message = req.weixin;
