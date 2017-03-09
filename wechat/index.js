@@ -14,24 +14,8 @@ var config = {
     encodingAESKey: 'uV3tDdxsj6aEvLrYU87NHt4HUaqyGtEj6uHTOtMI7Vf',
     checkSignature: true // 可选，默认为true。由于微信公众平台接口调试工具在明文模式下不发送签名，所以如要使用该测试工具，请将其设置为false
 };
-var client = new OAuth(appid, secret, function (openid, callback) {
-    // 传入一个根据openid获取对应的全局token的方法
-    // 在getUser时会通过该方法来获取token
-    console.log(openid);
-    fs.readFile(openid + ':access_token.txt', 'utf8', function (err, txt) {
-        if (err) {
-            return callback(err);
-        }
-        callback(null, JSON.parse(txt));
-    });
-}, function (openid, token, callback) {
-    // 请将token存储到全局，跨进程、跨机器级别的全局，比如写到数据库、redis等
-    // 这样才能在cluster模式及多机情况下使用，以下为写入到文件的示例
-    // 持久化时请注意，每个openid都对应一个唯一的token!
-    console.log(openid);
-    console.log(token);
-    fs.writeFile(openid + ':access_token.txt', JSON.stringify(token), callback);
-});
+var client = new OAuth(appid, secret);
+var domain = 'kknode.cn';
 
 router.use(express.query());
 router.use('/wechat', wechat(config, function (req, res, next) {
@@ -83,10 +67,9 @@ router.use('/wechat', wechat(config, function (req, res, next) {
                 title: '魔方面面',
                 description: '魔方面面-原魔方招聘-专门为年轻求职者提供免费猎头服务的平台',
                 picurl: 'https://static1.mofanghr.com/www/img/header-logo.png',
-                url: client.getAuthorizeURL('https://i.mofanghr.com/app/offline-index', '1', 'snsapi_base')
+                url: client.getAuthorizeURL('http://' + domain + '/weixin/callback', '', 'snsapi_userinfo')
             }
         ]);
-        console.log(client.getAuthorizeURL('https://i.mofanghr.com/app/offline-index', '1', 'snsapi_base'))
         return;
     }
     res.reply({
@@ -94,4 +77,20 @@ router.use('/wechat', wechat(config, function (req, res, next) {
         type: 'text'
     });
 }));
+
+router.get('/weixin/callback', function (req, res) {
+    var code = req.query.code;
+    client.getAccessToken(code, function (err, result) {
+        console.dir(err)
+        console.dir(result)
+        var accessToken = result.data.access_token;
+        var openid = result.data.openid;
+        console.log('token=' + accessToken);
+        console.log('openid=' + openid);
+
+        res.redirect('https://i.mofanghr.com')
+    })
+});
+
+
 module.exports = router;
