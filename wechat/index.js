@@ -70,6 +70,7 @@ router.use('/wechat', wechat(config, function (req, res, next) {
                 url: client.getAuthorizeURL('http://' + domain + '/weixin/callback', '', 'snsapi_userinfo')
             }
         ]);
+        console.log(client.getAuthorizeURL('http://' + domain + '/weixin/callback', '', 'snsapi_userinfo'));
         return;
     }
     res.reply({
