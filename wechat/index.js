@@ -18,7 +18,7 @@ var client = new OAuth(appid, secret);
 var domain = 'kknode.cn';
 
 router.use(express.query());
-router.use('/wechat', wechat(config, function (req, res, next) {
+router.get('/', wechat(config, function (req, res, next) {
     // 微信输入信息都在req.weixin上
     var message = req.weixin;
     console.log(message);
@@ -67,10 +67,10 @@ router.use('/wechat', wechat(config, function (req, res, next) {
                 title: '魔方面面',
                 description: '魔方面面-原魔方招聘-专门为年轻求职者提供免费猎头服务的平台',
                 picurl: 'https://static1.mofanghr.com/www/img/header-logo.png',
-                url: client.getAuthorizeURL('http://' + domain + '/weixin/callback', '', 'snsapi_userinfo')
+                url: client.getAuthorizeURL('http://' + domain + '/wechat/callback', '', 'snsapi_userinfo')
             }
         ]);
-        console.log(client.getAuthorizeURL('http://' + domain + '/weixin/callback', '', 'snsapi_userinfo'));
+        console.log(client.getAuthorizeURL('http://' + domain + '/wechat/callback', '', 'snsapi_userinfo'));
         return;
     }
     res.reply({
@@ -79,7 +79,7 @@ router.use('/wechat', wechat(config, function (req, res, next) {
     });
 }));
 
-router.get('/weixin/callback', function (req, res) {
+router.get('/callback', function (req, res) {
     var code = req.query.code;
     client.getAccessToken(code, function (err, result) {
         console.dir(err)

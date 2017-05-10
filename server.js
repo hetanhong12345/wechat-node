@@ -1,3 +1,5 @@
+
+//  960718
 var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -6,7 +8,7 @@ var cookieParser = require('cookie-parser');
 var app = express();
 var port = 80;
 var router = require('./bluebird/router');
-var wechat =require('./wechat/index');
+var wechat =require('./wechat');
 app.use(cookieParser());
 app.use(session({
     secret: 'abcdefg',
@@ -17,8 +19,8 @@ app.use(session({
 }));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-app.use(router);
-app.use(wechat);
+app.use('/router',router);
+app.use('/wechat',wechat);
 
 app.get("*", function (req, res) {
     res.sendFile(__dirname + '/index.html');
