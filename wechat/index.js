@@ -7,7 +7,7 @@ var router = express.Router();
 var wechat = require('wechat');
 var OAuth = require('wechat-oauth');
 var appid = 'wx615b29c1fe62d055';
-var secret = 'ca99e6f92581e5b887515d86b51ac277';
+var secret = 'c4e6c961623d3e84bb8e563670d7b9ef';
 var config = {
     token: 'hkktoken',
     appid: appid,
