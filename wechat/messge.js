@@ -79,22 +79,7 @@ router.get('/', wechat(config, function (req, res, next) {
   });
 }));
 
-router.get('/callback', function (req, res) {
-  var code = req.query.code;
-  client.getAccessToken(code, function (err, result) {
-    console.dir(err)
-    if (err) {
-      return res.send(JSON.stringify(err));
-    }
-    console.dir(result)
-    var accessToken = result.data.access_token;
-    var openid = result.data.openid;
-    console.log('token=' + accessToken);
-    console.log('openid=' + openid);
 
-    res.redirect('https://i.mofanghr.com')
-  })
-});
 
 
 module.exports = router;
