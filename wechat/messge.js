@@ -18,7 +18,7 @@ var client = new OAuth(appid, secret);
 var location = 'http://47.93.245.70/';
 
 router.use(express.query());
-router.get('/', wechat(config, function (req, res, next) {
+router.use(wechat(config, function (req, res, next) {
   // 微信输入信息都在req.weixin上
   var message = req.weixin;
   console.log(message);

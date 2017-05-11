@@ -8,7 +8,7 @@ var cookieParser = require('cookie-parser');
 var app = express();
 var port = 8080;
 var router = require('./bluebird/router');
-var wechat =require('./wechat/messge');
+var wechat =require('./wechat/index');
 var OAuth =require('./wechat/OAuth');
 app.use(cookieParser());
 app.use(session({
@@ -21,7 +21,6 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use('/router',router);
-app.use('/wechat',wechat);
 app.use('/oauth',OAuth);
 
 app.get("*", function (req, res) {
