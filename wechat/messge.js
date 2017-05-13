@@ -7,7 +7,7 @@ var router = express.Router();
 var wechat = require('wechat');
 var OAuth = require('wechat-oauth');
 var appid = 'wx615b29c1fe62d055';
-var secret = 'c4e6c961623d3e84bb8e563670d7b9ef';
+var secret = '839e5f9481e628a1aa810574c620d2eb';
 var config = {
   token: 'hkktoken',
   appid: appid,
@@ -18,7 +18,7 @@ var client = new OAuth(appid, secret);
 var location = 'http://47.93.245.70/';
 
 router.use(express.query());
-router.use(wechat(config, function (req, res, next) {
+router.all('/', wechat(config, function (req, res, next) {
   // 微信输入信息都在req.weixin上
   var message = req.weixin;
   console.log(message);
@@ -78,8 +78,6 @@ router.use(wechat(config, function (req, res, next) {
     type: 'text'
   });
 }));
-
-
 
 
 module.exports = router;
