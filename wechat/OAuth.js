@@ -5,8 +5,8 @@ var fs = require('fs');
 var express = require('express');
 var router = express.Router();
 var OAuth = require('wechat-oauth');
-var appid = 'wx615b29c1fe62d055';
-var secret = 'c4e6c961623d3e84bb8e563670d7b9ef';
+var appid = 'wxf94393a3d63776b8';
+var secret = 'c22019ff514d4299cd74bf816d5d30d6';
 
 var client = new OAuth(appid, secret);
 var location = 'http://47.93.245.70/';
