@@ -6,13 +6,13 @@ var express = require('express');
 var router = express.Router();
 var wechat = require('wechat');
 var OAuth = require('wechat-oauth');
-var appid = 'wx615b29c1fe62d055';
-var secret = '839e5f9481e628a1aa810574c620d2eb';
+var appid = 'wxf94393a3d63776b8';
+var secret = 'c22019ff514d4299cd74bf816d5d30d6';
 var config = {
   token: 'hkktoken',
   appid: appid,
   encodingAESKey: 'uV3tDdxsj6aEvLrYU87NHt4HUaqyGtEj6uHTOtMI7Vf',
-  checkSignature: true // 可选，默认为true。由于微信公众平台接口调试工具在明文模式下不发送签名，所以如要使用该测试工具，请将其设置为false
+  checkSignature: false // 可选，默认为true。由于微信公众平台接口调试工具在明文模式下不发送签名，所以如要使用该测试工具，请将其设置为false
 };
 var client = new OAuth(appid, secret);
 var location = 'http://47.93.245.70/';
