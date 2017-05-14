@@ -15,53 +15,8 @@ var config = {
   checkSignature: false // 可选，默认为true。由于微信公众平台接口调试工具在明文模式下不发送签名，所以如要使用该测试工具，请将其设置为false
 };
 var client = new OAuth(appid, secret);
-var nodeWeixinMenu = require('node-weixin-menu');
-var wexinConfig = require('node-weixin-config');
 var location = 'http://47.93.245.70';
-wexinConfig.app.init({
-  id: appid,
-  secret: secret,
-  token: 'hkktoken'
-});
-var menu = {
-  "button": [
-    {
-      "type": "view",
-      "name": "我要下单",
-      "url": "http://www.soso.com/"
-    },
-    {
-      "name": "菜单",
-      "sub_button": [
-        {
-          "type": "view",
-          "name": "搜索",
-          "url": "http://www.soso.com/"
-        },
-        {
-          "type": "view",
-          "name": "视频",
-          "url": "http://v.qq.com/"
-        },
-        {
-          "type": "click",
-          "name": "赞一下我们",
-          "key": "V1001_GOOD"
-        }
-      ]
-    }
-  ]
-};
-nodeWeixinMenu.create({
-  id: appid,
-  secret: secret,
-  token: 'hkktoken'
-}, menu, function (error, data) {
-  console.log(data);
-  //error === true
-  //data.errcode === 0
-  //data.errmsg === 'ok'
-});
+
 router.use(express.query());
 router.all('/', wechat(config, function (req, res, next) {
   // 微信输入信息都在req.weixin上
